@@ -7,7 +7,7 @@ app = FastAPI()
 
 SERVICE_NAME = os.getenv("SERVICE_NAME", "Default")
 SERVICE_VERSION = os.getenv("SERVICE_VERSION", "0")
-RELATED_SERVICES = os.getenv("RELATED_SERVICES", "No Related").split(",")
+RELATED_SERVICES = os.getenv("RELATED_SERVICES", "").split(",")
 SERVICE_PORT = os.getenv("PORT", "8000")
 
 
