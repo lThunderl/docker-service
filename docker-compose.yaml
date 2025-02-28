@@ -1,17 +1,79 @@
 
 services:
   service1:
-    build: ./service1
+    build: ./backend/service1
     environment:
+      id: 1
       SERVICE_NAME: "Service1"
       SERVICE_VERSION: "1"
-      RELATED_SERVICES: "http://service2:8000"
+      RELATED_SERVICES: "http://service2:8000, http://service3:8000"
     ports: 
-      - "8888:8000"
+    - "8888:8000"
+    networks:
+    - service-network
   service2:
-    build: ./service2
+    build: ./backend/service2
     environment:
+      id: 2
       SERVICE_NAME: "Service2"
       SERVICE_VERSION: "2"
     ports: 
-      - "8889:8000"
+    - "8889:8000"
+    networks:
+    - service-network
+
+  service3:
+    build: ./backend/service3
+    environment:
+      id: 3
+      SERVICE_NAME: "Service3"
+      SERVICE_VERSION: "3"
+      RELATED_SERVICES: "http://service5:8000"
+    ports: 
+    - "8890:8000"
+    networks:
+    - service-network
+
+  service4:
+    build: ./backend/service4
+    environment:
+      id: 4
+      SERVICE_NAME: "Service4"
+      SERVICE_VERSION: "4"
+      RELATED_SERVICES: "http://service5:8000"
+    ports: 
+    - "8891:8000"
+    networks:
+    - service-network
+
+  service5:
+    build: ./backend/service5
+    environment:
+      id: 5
+      SERVICE_NAME: "Service5"
+      SERVICE_VERSION: "5"
+    ports: 
+    - "8892:8000"
+    networks:
+    - service-network
+
+  serviceinfo:
+    build: ./backend/info
+    environment:
+      RELATED_SERVICES: "http://service1:8000, http://service2:8000, http://service3:8000, http://service4:8000, http://service5:8000"
+    ports:
+    - "8893:8000"
+    networks:
+    - service-network
+  vue:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+    - '8080:8080'
+    networks:
+    - service-network
+    
+networks:
+  service-network:
+    driver: bridge

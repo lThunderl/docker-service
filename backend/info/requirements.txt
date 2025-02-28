@@ -1,0 +1,4 @@
+httpx
+docker
+uvicorn
+fastapi
