@@ -1,4 +1,4 @@
-FROM python:3.12.9-alpine3.21
+FROM python:3.13.2
 WORKDIR /service2
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

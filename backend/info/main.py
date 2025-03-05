@@ -27,26 +27,26 @@ async def read_root():
             try:
                 response = await client.get(service_url)
                 data = response.json()
-                ServicesInfo.append({"Service Name: " : data.get('Service_Name', 'Not found'),
-                                    "Service_Version: ": data.get('Service_Version', 'Not found'),
-                                    "Service Id: ":  data.get('id', 'Not found'),
-                                    "Service URL: " : service_url})
+                ServicesInfo.append({"Service_Name" : data.get('Service_Name', 'Not found'),
+                                    "Service_Version": data.get('Service_Version', 'Not found'),
+                                    "Service_Id":  data.get('id', 'Not found'),
+                                    "Service_URL" : service_url})
                 print(data)
             except:
                 print("Can't get ServicesInfo")
-    try:
-        client = docker.from_env()
-        containers = client.containers.list()
-        for container in containers:
-            if (container.status == "running"):
-                ServicesInfo.append({"Is Running: " : "Yes"})
-            else:
-                ServicesInfo.append({"Is Running: " : "No"})
-    except:
-        print("Can't get Running containers info")    
+            try:
+                client = docker.from_env()
+                containers = client.containers.list()
+                for container in containers:
+                    if (container.status == "running"):
+                        ServicesInfo.append({"Is_Running" : "Yes"})
+                    else:
+                        ServicesInfo.append({"Is_Running" : "No"})
+            except:
+                print("Can't get Running containers info")    
 
         
-    return print(ServicesInfo)
+    return ServicesInfo
 
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=8000)
