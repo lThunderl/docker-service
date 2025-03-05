@@ -2,12 +2,23 @@
   <div>
     <p v-if="loading">Загрузка данных...</p>
     <p v-if="error">Ошибка: {{ error }}</p>
-    <ul v-if="data">
-      <li v-for="service in data">
-        Service info: {{ service.id }} - {{ service.Service_Name }} 
-      </li>
-      
-    </ul>
+    <div>
+    <table v-if="data"  class="info">
+      <tr>
+          <th>Service name</th>
+          <th>Service Version</th>
+          <th>Service Id</th>
+          <th>Service URL</th>
+      </tr>
+      <tr v-for="service in data"
+      :key="service.Service_Id">
+        <td>{{ service.Service_Name }}</td>
+        <td>{{ service.Service_Version }}</td>
+        <td>{{ service.Service_Id }}</td>
+        <td>{{ service.Service_URL }}</td>
+      </tr>
+    </table>
+    </div>
   </div>
 </template>
 
@@ -38,6 +49,11 @@ export default {
 </script>
 
 <style>
+.info{
+  margin: 50px;
+  text-align: center;
+  width: 100%;
+}
 .services-container {
   padding: 20px;
   max-width: 800px;
